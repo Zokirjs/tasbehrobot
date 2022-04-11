@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,5 +17,9 @@
   "bugs": {
     "url": "https://github.com/Zokirjs/tasbehrobot/issues"
   },
-  "homepage": "https://github.com/Zokirjs/tasbehrobot#readme"
+  "homepage": "https://github.com/Zokirjs/tasbehrobot#readme",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "telegraf": "^4.7.0"
+  }
 }
