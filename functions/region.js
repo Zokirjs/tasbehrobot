@@ -1,5 +1,4 @@
 const { Keyboard } = require('telegram-keyboard')
-
 const keyboard = Keyboard.make([
     "Toshkent shahar",
     "Toshkent viloyati",
@@ -18,7 +17,9 @@ const keyboard = Keyboard.make([
 ], { columns: 2, oneTimeKeyboard: true })
 
 function set_region(ctx) {
-    // ctx.session.message = "region"
+    ctx.session = {
+        ask_region: 1
+    }
     ctx.reply('Ro`yxatdan o`tish uchun, Shaxar yoki viloyatingizni tanlang', keyboard.reply())
 }
 
