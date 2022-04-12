@@ -19,7 +19,7 @@ function set_region(ctx) {
     ctx.session = {
         ask_region: 1
     }
-    ctx.reply('Ro`yxatdan o`tish uchun, Shaxar yoki viloyatingizni tanlang', keyboard.reply())
+    ctx.reply('Shaxar yoki viloyatingizni tanlang', keyboard.reply())
 }
 
 module.exports = set_region

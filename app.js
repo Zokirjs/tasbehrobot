@@ -1,12 +1,13 @@
-const {
-    Telegraf,
-    session
-} = require('telegraf')
 require('dotenv').config()
-const mongoose = require('mongoose')
+const { Telegraf, session } = require('telegraf')
 const bot = new Telegraf(process.env.BOT_TOKEN)
-const greating = require('./functions/greating')
-const set_region = require('./functions/region')
+bot.use(session())
+// Bot setting up
+
+const mongoose = require('mongoose')
+const User = require('./db/userSchema')
+const Region = require('./db/regionSchema')
+
 mongoose.connect(process.env.DB_URL).then(
     () => {
         console.log('Connected to DB!');
@@ -15,20 +16,25 @@ mongoose.connect(process.env.DB_URL).then(
         console.log('Error: ', err);
     }
 )
+// Database setting up
 
-const User = require('./db/userSchema')
 
-bot.use(session())
+const greating = require('./functions/greating')
+const set_region = require('./functions/region')
+const changeRegion = require('./functions/changeRegion')
+
+
+
 
 bot.start(async (ctx) => {
-    const user = await User.findOne({
+    let user = await User.findOne({
         userid: ctx.from.id
     })
 
     if (user) {
         greating(ctx, user)
-    }else {
-        const newUser = new User({
+    } else {
+        let newUser = new User({
             userid: ctx.from.id,
             uname: ctx.from.first_name,
             region: null,
@@ -39,14 +45,28 @@ bot.start(async (ctx) => {
         set_region(ctx)
     }
 
-    
+
 })
 
-bot.on('message', (ctx) => {
+bot.on('message', async (ctx) => {
+    console.log(ctx.session)
     if (ctx.session && ctx.session.ask_region) {
-
+        changeRegion(ctx, User, Region)
     } else {
-        // nO
+        switch (ctx.message.text) {
+            case "🕋 Namoz Vaqtlari": {
+                break;
+            }
+            case "⚙️ Sozlamalar": {
+                set_region(ctx)
+                break;
+            }
+            case "👨‍💻 Admin bilan aloqa": {
+
+                break;
+            }
+
+        }
     }
 })
 
