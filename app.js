@@ -18,38 +18,16 @@ mongoose.connect(process.env.DB_URL).then(
 )
 // Database setting up
 
-
-const greating = require('./functions/greating')
-const set_region = require('./functions/region')
+const start = require('./functions/start')
 const changeRegion = require('./functions/changeRegion')
+const contact = require('./functions/contact')
 
 
 
 
-bot.start(async (ctx) => {
-    let user = await User.findOne({
-        userid: ctx.from.id
-    })
-
-    if (user) {
-        greating(ctx, user)
-    } else {
-        let newUser = new User({
-            userid: ctx.from.id,
-            uname: ctx.from.first_name,
-            region: null,
-            date: Date.now()
-        })
-        await newUser.save()
-        greating(ctx)
-        set_region(ctx)
-    }
-
-
-})
+bot.start((ctx) => start(ctx, User))
 
 bot.on('message', async (ctx) => {
-    console.log(ctx.session)
     if (ctx.session && ctx.session.ask_region) {
         changeRegion(ctx, User, Region)
     } else {
@@ -62,7 +40,7 @@ bot.on('message', async (ctx) => {
                 break;
             }
             case "👨‍💻 Admin bilan aloqa": {
-
+                contact(ctx)
                 break;
             }
 
