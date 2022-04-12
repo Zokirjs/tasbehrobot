@@ -11,7 +11,6 @@ const userSchema = new mongooose.Schema({
     region: {
         type: mongooose.Schema.Types.ObjectId,
         ref: 'Region',
-        required: true,
     },
     date: {
         type: Date,
