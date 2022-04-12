@@ -8,7 +8,6 @@ const keyboard = Keyboard.make([
     "Jizzax viloyati",
     "Namangan viloyati",
     "Navoiy viloyati",
-    "Navoiy viloyati",
     "Qashqadaryo viloyati",
     "Samarqand viloyati",
     "Sirdaryo viloyati",

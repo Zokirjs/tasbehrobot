@@ -26,7 +26,7 @@ bot.start(async (ctx) => {
     })
 
     if (user) {
-        greating(ctx)
+        greating(ctx, user)
     }else {
         const newUser = new User({
             userid: ctx.from.id,
