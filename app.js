@@ -21,7 +21,9 @@ mongoose.connect(process.env.DB_URL).then(
 const start = require('./functions/start')
 const changeRegion = require('./functions/changeRegion')
 const contact = require('./functions/contact')
-
+const sendToAll = require('./functions/sendToAll')
+const setSending = require('./functions/setSending')
+const set_region = require('./functions/region')
 
 
 
@@ -30,7 +32,9 @@ bot.start((ctx) => start(ctx, User))
 bot.on('message', async (ctx) => {
     if (ctx.session && ctx.session.ask_region) {
         changeRegion(ctx, User, Region)
-    } else {
+    } else if (ctx.session && ctx.session.setSending) {
+        sendToAll(ctx, User)
+    }else {
         switch (ctx.message.text) {
             case "🕋 Namoz Vaqtlari": {
                 break;
@@ -42,6 +46,16 @@ bot.on('message', async (ctx) => {
             case "👨‍💻 Admin bilan aloqa": {
                 contact(ctx)
                 break;
+            }
+            case "✍️ Send Message": {
+                if (ctx.from.id == process.env.ADMIN_ID) {
+                    setSending(ctx)
+                }else {
+                    return
+                }
+            }
+            default: {
+                return
             }
 
         }

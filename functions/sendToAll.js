@@ -1,7 +1,8 @@
-async function sendToAll(ctx, User, msg) {
+async function sendToAll(ctx, User) {
     let users = await User.find()
-    users.forEach(function (msg) {
-        ctx.telegram.sendMessage(ctx.from.id, msg)
+    users.forEach(async function (user) {
+        // ctx.copyMessage(user.userid, ctx.from.chatId, ctx.message.id)
+        ctx.copyMessage(user.userid)
         await sleep(2000);
     })
 }

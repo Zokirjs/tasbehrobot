@@ -16,7 +16,7 @@ async function start (ctx, User) {
             date: Date.now()
         })
         await newUser.save()
-        greating(ctx)
+        greating(ctx,newUser)
         set_region(ctx)
     }
 }
